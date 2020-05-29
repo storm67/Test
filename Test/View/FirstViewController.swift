@@ -23,6 +23,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     @objc fileprivate func refresher(sender: UIRefreshControl) {
         firstTextField.text = nil
+        filter = false
         viewModel.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.tableView.reloadData()
@@ -69,19 +70,18 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         secondTextField.text = text
         guard let textOf = secondTextField.text else { return }
         if !textOf.isEmpty {
-        filter = true
         viewModel.filter(text: text) {
+            self.filter = true
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
             }
         }
         self.view.endEditing(true)
-        } else {
+        } else if textOf.isEmpty {
         filter = false
         }
 }
     @objc fileprivate func cancelDatePicker() {
-        //cancel button dismiss datepicker dialog
         self.view.endEditing(true)
     }
     
@@ -103,12 +103,37 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             filter = false
         }
     }
-
+    @objc func check() -> UITapGestureRecognizer {
+       let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+       guard let text = firstTextField.text else { return tap }
+       text.isEmpty ? (filter = false) : (filter = true)
+       return tap
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
+    @objc func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        print("true") //суперкостыль
+        DispatchQueue.main.async {
+        self.view.endEditing(true)
+        }
+        viewModel.refresh()
+        secondTextField.text = nil
+        filter = false
+        return true
+    }
+    
+    
     fileprivate func layout() {
         tableView.register(UINib(nibName: "ReviewCell", bundle: .main), forCellReuseIdentifier: "Cell")
         tryGetModel()
         tableView.refreshControl = refresh
+        view.addGestureRecognizer(check())
         secondTextField.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
+        secondTextField.addTarget(self, action: #selector(textFieldShouldClear(_:)), for: .editingChanged)
         firstTextField.addTarget(self, action: #selector(editingStart(_:)), for: .editingChanged)
         firstTextField.setLeftPaddingPoints(24)
         secondTextField.setLeftPaddingPoints(95)
