@@ -64,7 +64,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc fileprivate func donedatePicker() {
-        
+        tableView.tableFooterView = nil
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         let text = formatter.string(from: datePicker.date)
@@ -94,13 +94,14 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }()
     
     @objc func editingStart(_ sender: UITextField) {
+        tableView.tableFooterView = nil
         guard let text = sender.text else { return }
         print(text)
         if !text.isEmpty {
             search = true
-            print(search)
             viewModel.getItems(text: text) { [weak self] in
                 self?.tableView.reloadData()
+                self?.tableView.stopLoading()
             }
         } else {
             search = false
@@ -120,6 +121,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     @objc func textFieldShouldClear(_ textField: UITextField) -> Bool {
         //суперкостыль, но решается просто на самом деле
+        tableView.tableFooterView = nil
         DispatchQueue.main.async {
             self.view.endEditing(true)
         }
@@ -163,17 +165,17 @@ extension FirstViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.reviewModel!.count-1 {
             if viewModel.offset > viewModel.reviewModel!.count-1 {
-                print(filter, search)
                 if !filter && !search {
                     if !search {
                         if !filter {
+                            tableView.tableFooterView = UITableView.indicatorView(tableView)()
                             tableView.addLoading(indexPath) { [weak self] in
                                 self?.viewModel.getItems(index: self?.viewModel.offset ?? 0)
                                 self?.viewModel.signal { [weak self] in
                                     DispatchQueue.main.async {
                                         self?.tableView.reloadData()
+                                        self?.tableView.stopLoading()
                                     }
-                                    tableView.stopLoading()
                                 }
                             }
                         }

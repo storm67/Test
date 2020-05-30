@@ -63,20 +63,19 @@ extension UITableView {
 
     func indicatorView() -> UIActivityIndicatorView{
         var activityIndicatorView = UIActivityIndicatorView()
-        if self.tableFooterView == nil{
+        if self.tableFooterView != nil {
             let indicatorFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: 40)
             activityIndicatorView = UIActivityIndicatorView(frame: indicatorFrame)
-            activityIndicatorView.isHidden = false
             activityIndicatorView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
-            activityIndicatorView.isHidden = true
             self.tableFooterView = activityIndicatorView
             return activityIndicatorView
-        }else{
+        } else {
             return activityIndicatorView
         }
     }
 
     func addLoading(_ indexPath:IndexPath, closure: @escaping (() -> Void)){
+        indicatorView().isHidden = false
         indicatorView().startAnimating()
         if let lastVisibleIndexPath = self.indexPathsForVisibleRows?.last {
             if indexPath == lastVisibleIndexPath && indexPath.row == self.numberOfRows(inSection: 0) - 1 {
@@ -85,7 +84,6 @@ extension UITableView {
                 }
             }
         }
-        indicatorView().isHidden = false
     }
 
     func stopLoading(){
