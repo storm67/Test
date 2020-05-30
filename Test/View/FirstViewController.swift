@@ -16,6 +16,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var firstTextField: UITextField!
     @IBOutlet weak var secondTextField: UITextField!
     var filter = false
+    var search = false
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -35,7 +36,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         if viewModel.reviewModel != nil {
             DispatchQueue.main.async {
                 self.viewModel.signal {
-                self.tableView.reloadData()
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -70,17 +71,17 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         secondTextField.text = text
         guard let textOf = secondTextField.text else { return }
         if !textOf.isEmpty {
-        viewModel.filter(text: text) {
-            self.filter = true
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
+            viewModel.filter(text: text) {
+                self.filter = true
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
             }
-        }
-        self.view.endEditing(true)
+            self.view.endEditing(true)
         } else if textOf.isEmpty {
-        filter = false
+            filter = false
         }
-}
+    }
     @objc fileprivate func cancelDatePicker() {
         self.view.endEditing(true)
     }
@@ -94,20 +95,22 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     
     @objc func editingStart(_ sender: UITextField) {
         guard let text = sender.text else { return }
+        print(text)
         if !text.isEmpty {
-            filter = true
+            search = true
+            print(search)
             viewModel.getItems(text: text) { [weak self] in
                 self?.tableView.reloadData()
             }
         } else {
-            filter = false
+            search = false
         }
     }
     @objc func check() -> UITapGestureRecognizer {
-       let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-       guard let text = firstTextField.text else { return tap }
-       text.isEmpty ? (filter = false) : (filter = true)
-       return tap
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        guard let text = firstTextField.text else { return tap }
+        text.isEmpty ? (filter = false) : (filter = true)
+        return tap
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -116,9 +119,9 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        print("true") //суперкостыль
+        //суперкостыль, но решается просто на самом деле
         DispatchQueue.main.async {
-        self.view.endEditing(true)
+            self.view.endEditing(true)
         }
         viewModel.refresh()
         secondTextField.text = nil
@@ -158,17 +161,22 @@ extension FirstViewController: UITableViewDataSource {
 extension FirstViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if !filter {
-            if indexPath.row == viewModel.reviewModel!.count-1 {
-                if viewModel.offset > viewModel.reviewModel!.count-1 {
-                    tableView.addLoading(indexPath) { [weak self] in
-                        self?.viewModel.getItems(index: self?.viewModel.offset ?? 0)
-                        self?.viewModel.signal { [weak self] in
-                            DispatchQueue.main.async {
-                                self?.tableView.reloadData()
+        if indexPath.row == viewModel.reviewModel!.count-1 {
+            if viewModel.offset > viewModel.reviewModel!.count-1 {
+                print(filter, search)
+                if !filter && !search {
+                    if !search {
+                        if !filter {
+                            tableView.addLoading(indexPath) { [weak self] in
+                                self?.viewModel.getItems(index: self?.viewModel.offset ?? 0)
+                                self?.viewModel.signal { [weak self] in
+                                    DispatchQueue.main.async {
+                                        self?.tableView.reloadData()
+                                    }
+                                    tableView.stopLoading()
+                                }
                             }
                         }
-                        tableView.stopLoading()
                     }
                 }
             }

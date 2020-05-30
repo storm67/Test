@@ -10,6 +10,7 @@ import Foundation
 
 class ReviewViewModel: NSObject {
     private(set) var reviewModel: [DependencyReview]? = [DependencyReview]()
+    
     var offset = 0
     var signal: (() -> ())?
     
@@ -72,9 +73,7 @@ class ReviewViewModel: NSObject {
         dateForm.dateFormat = "dd/MM/yyyy"
         guard let date = dateForm.date(from: text) else { return }
         let normally = dateFormatter.string(from: date)
-        print(normally)
         let items = reviewModel?.filter({ item -> Bool in
-            print(item.date)
             return item.date.contains(normally)
         })
         reviewModel = []
