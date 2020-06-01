@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class ReviewCell: UITableViewCell {
+final class ReviewCell: UITableViewCell {
+    
     @IBOutlet weak var isImage: UIImageView! {
         didSet {
             isImage.layer.cornerRadius = 10

@@ -8,7 +8,15 @@
 
 import Foundation
 
-enum Router {
+protocol RouterProtocol {
+    var scheme: String { get }
+    var host: String { get }
+    var path: String { get }
+    var parameters: [URLQueryItem] { get }
+    var method: String { get }
+}
+
+enum Router: RouterProtocol {
     case getReview(val: Int)
     case getReviewer
     case getReviewerInfo(val: String)

@@ -8,7 +8,11 @@
 
 import Foundation
 
-class NetworkingSerivce {
+protocol NetworkProtocol: class {
+    static func request<T: Codable>(router: Router, completion: @escaping (Result<T, Error>) -> ())
+}
+
+final class NetworkingSerivce: NetworkProtocol {
     class func request<T: Codable>(router: Router, completion: @escaping (Result<T, Error>) -> ()) {
         // 2.
         var components = URLComponents()

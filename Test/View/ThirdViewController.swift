@@ -8,20 +8,25 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController{
+fileprivate protocol ThirdViewProtocol: class {
+    var data: DependencyCritic? { get }
+    func getReviewer()
+}
+
+final class ThirdViewController: UIViewController, ThirdViewProtocol {
     var viewModel = ReviewerInfoViewModel()
-    
+    weak var data: DependencyCritic?
     @IBOutlet weak var status: UILabel! {
         didSet {
             status.layer.masksToBounds = true
             status.layer.cornerRadius = 5
         }
     }
+    
     @IBOutlet weak var isImage: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!//API не возвращает фильмов от критика
-    var data: DependencyCritic!
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "ReviewerInfo", bundle: .main), forCellWithReuseIdentifier: "Cell")
@@ -29,9 +34,10 @@ class ThirdViewController: UIViewController{
     }
     
     fileprivate func getReviewer() {
-         isImage.setCustomImage(data.multim)
-         name.text = data.name
-         status.text = data.status
+        guard let data = data else { return }
+        isImage.setCustomImage(data.multim)
+        name.text = data.name
+        status.text = data.status
      }
 }
 extension ThirdViewController: UICollectionViewDataSource {

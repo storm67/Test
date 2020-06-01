@@ -9,7 +9,14 @@
 import Foundation
 import UIKit
 
-class SecondViewController: UIViewController {
+fileprivate protocol SecondViewProtocol: class {
+    func refresher(sender: UIRefreshControl)
+    func tryGetModel()
+    func editingStart(_ sender: UITextField)
+    func layout()
+}
+
+final class SecondViewController: UIViewController, SecondViewProtocol {
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     var viewModel = ReviewerViewModel()
@@ -40,13 +47,13 @@ class SecondViewController: UIViewController {
         return refresh
     }()
     
-    @objc func editingStart(_ sender: UITextField) {
+    @objc fileprivate func editingStart(_ sender: UITextField) {
            guard let text = sender.text else { return }
                viewModel.filter(text: text) { [weak self] in
                    self?.collectionView.reloadData()
                }
            }
-    func layout() {
+    fileprivate func layout() {
         collectionView.register(UINib(nibName: "ReviewerCell", bundle: .main), forCellWithReuseIdentifier: "Cell")
         tryGetModel()
         collectionView.refreshControl = refresh
@@ -58,7 +65,7 @@ class SecondViewController: UIViewController {
 extension SecondViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ThirdViewController") as! ThirdViewController
-        vc.data = viewModel.reviewModel?[indexPath.row] ?? DependencyCritic(model: CriticResults(displayName: "", status: "", multimedia: nil))
+        vc.data = viewModel.reviewModel?[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

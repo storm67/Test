@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ReviewViewModel: NSObject {
-    private(set) var reviewModel: [DependencyReview]? = [DependencyReview]()
+final class ReviewViewModel: NSObject {
+    fileprivate(set) var reviewModel: [DependencyReview]? = [DependencyReview]()
     
     var offset = 0
     var signal: (() -> ())?

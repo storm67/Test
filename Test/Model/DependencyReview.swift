@@ -8,7 +8,15 @@
 
 import Foundation
 
-class DependencyReview {
+protocol Review: class {
+    var name: String { get }
+    var image: String { get }
+    var date: String { get }
+    var description: String { get }
+    var byLine: String { get }
+}
+
+final class DependencyReview: Review {
     var name: String
     var image: String
     var date: String

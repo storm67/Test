@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReviewerInfo: UICollectionViewCell {
+final class ReviewerInfo: UICollectionViewCell {
 
      @IBOutlet weak var isImage: UIImageView! {
             didSet {

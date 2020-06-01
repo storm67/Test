@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class FirstViewController: UIViewController, UITextFieldDelegate {
+
+final class FirstViewController: UIViewController, UITextFieldDelegate {
     var viewModel = ReviewViewModel()
     let datePicker = UIDatePicker()
     
@@ -93,7 +94,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    fileprivate var refresh: UIRefreshControl = {
+    fileprivate lazy var refresh: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(refresher(sender:)), for: .valueChanged)
         return refresh

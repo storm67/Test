@@ -8,7 +8,13 @@
 
 import Foundation
 
-class DependencyCritic {
+protocol Reviewer: class {
+    var name: String { get }
+    var status: String { get }
+    var multim: String? { get }
+}
+
+final class DependencyCritic: Reviewer {
     var name: String
     var status: String
     var multim: String?

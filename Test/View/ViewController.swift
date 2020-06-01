@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
