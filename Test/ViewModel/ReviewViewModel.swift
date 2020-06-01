@@ -22,7 +22,6 @@ class ReviewViewModel: NSObject {
     }()
     
     func getItems(index: Int) {
-        let semaphore = DispatchSemaphore(value: 1)
         let value = Router.getReview(val: index)
         defer { self.offset += 20 }
         NetworkingSerivce.request(router: value) { (result: Result<ReviewModel, Error>) in
