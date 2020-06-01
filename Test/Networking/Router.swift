@@ -13,7 +13,6 @@ enum Router {
     case getReviewer
     case getReviewerInfo(val: String)
     case searchReview(val: String)
-    
     var scheme: String {
         switch self {
         case .getReview, .getReviewer, .getReviewerInfo, .searchReview:

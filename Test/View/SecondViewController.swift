@@ -21,7 +21,7 @@ class SecondViewController: UIViewController {
     
     @objc fileprivate func refresher(sender: UIRefreshControl) {
         viewModel.refresh()
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.collectionView.reloadData()
             sender.endRefreshing()
         }
@@ -53,7 +53,7 @@ class SecondViewController: UIViewController {
         searchField.addTarget(self, action: #selector(editingStart(_:)), for: .editingChanged)
         searchField.setLeftPaddingPoints(24)
     }
-}
+       }
 
 extension SecondViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -61,14 +61,13 @@ extension SecondViewController: UICollectionViewDataSource, UICollectionViewDele
         vc.data = viewModel.reviewModel?[indexPath.row] ?? DependencyCritic(model: CriticResults(displayName: "", status: "", multimedia: nil))
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let model = viewModel.reviewModel?.count else { return 0 }
         return model
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ReviewerCell else { return UICollectionViewCell() }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ReviewerCell
         cell.viewModel = viewModel.cellViewModel(index: indexPath.row)
         
         return cell

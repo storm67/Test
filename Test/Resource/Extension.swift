@@ -104,4 +104,3 @@ extension UITextField {
         self.rightViewMode = .always
     }
 }
-
