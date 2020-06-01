@@ -12,29 +12,35 @@ import UIKit
 class FirstViewController: UIViewController, UITextFieldDelegate {
     var viewModel = ReviewViewModel()
     let datePicker = UIDatePicker()
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var firstTextField: UITextField!
     @IBOutlet weak var secondTextField: UITextField!
+    
     var filter = false
     var search = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
     }
     
     @objc fileprivate func refresher(sender: UIRefreshControl) {
+        sender.beginRefreshing()
         firstTextField.text = nil
+        secondTextField.text = nil
         filter = false
         viewModel.refresh()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.async {
             self.tableView.reloadData()
             sender.endRefreshing()
         }
     }
+    
     fileprivate func tryGetModel() {
         viewModel.getItems(index: viewModel.offset)
         if viewModel.reviewModel != nil {
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 self.viewModel.signal {
                     self.tableView.reloadData()
                 }
@@ -47,7 +53,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         datePicker.datePickerMode = .date
         
         //ToolBar
-        let toolbar = UIToolbar();
+        let toolbar = UIToolbar(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 44.0)))
         toolbar.sizeToFit()
         
         //done button & cancel button
@@ -87,7 +93,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    fileprivate lazy var refresh: UIRefreshControl = {
+    fileprivate var refresh: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(refresher(sender:)), for: .valueChanged)
         return refresh
@@ -96,7 +102,6 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     @objc func editingStart(_ sender: UITextField) {
         tableView.tableFooterView = nil
         guard let text = sender.text else { return }
-        print(text)
         if !text.isEmpty {
             search = true
             viewModel.getItems(text: text) { [weak self] in
@@ -107,6 +112,7 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
             search = false
         }
     }
+    
     @objc func check() -> UITapGestureRecognizer {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         guard let text = firstTextField.text else { return tap }
@@ -120,7 +126,6 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        //суперкостыль, но решается просто на самом деле
         tableView.tableFooterView = nil
         DispatchQueue.main.async {
             self.view.endEditing(true)
@@ -144,7 +149,27 @@ class FirstViewController: UIViewController, UITextFieldDelegate {
         secondTextField.setLeftPaddingPoints(95)
         showDatePicker()
     }
-}
+    
+    fileprivate func getIndicator() {
+        if tableView.tableFooterView == nil {
+            tableView.tableFooterView = UITableView.indicatorView(tableView)()
+        }
+    }
+        fileprivate func getPage(indexPath: IndexPath) {
+            getIndicator()
+            tableView.addLoading(indexPath) { [weak self] in
+                    self?.viewModel.getItems(index: self?.viewModel.offset ?? 0)
+                    self?.viewModel.signal { [weak self] in
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                            self?.tableView.stopLoading()
+                    }
+                }
+            }
+        }
+    }
+
+
 extension FirstViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,7 +178,7 @@ extension FirstViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ReviewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ReviewCell else { return UITableViewCell()}
         cell.viewModel = viewModel.cellViewModel(index: indexPath.row)
         return cell
     }
@@ -163,24 +188,10 @@ extension FirstViewController: UITableViewDataSource {
 extension FirstViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.reviewModel!.count-1 {
-            if viewModel.offset > viewModel.reviewModel!.count-1 {
-                if !filter && !search {
-                    if !search {
-                        if !filter {
-                            tableView.tableFooterView = UITableView.indicatorView(tableView)()
-                            tableView.addLoading(indexPath) { [weak self] in
-                                self?.viewModel.getItems(index: self?.viewModel.offset ?? 0)
-                                self?.viewModel.signal { [weak self] in
-                                    DispatchQueue.main.async {
-                                        self?.tableView.reloadData()
-                                        self?.tableView.stopLoading()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        guard let reviewModel = viewModel.reviewModel else { return }
+        if indexPath.row == reviewModel.count-1 && viewModel.offset > reviewModel.count-1 {
+            if !filter && !search {
+                getPage(indexPath: indexPath)
             }
         }
     }

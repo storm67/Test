@@ -27,13 +27,9 @@ class ReviewViewModel: NSObject {
         defer { self.offset += 20 }
         NetworkingSerivce.request(router: value) { (result: Result<ReviewModel, Error>) in
             do {
-                semaphore.wait()
-                repeat {
                 let model = try result.get()
                 let items = model.results.map { DependencyReview(review: $0) }
                 items.forEach { self.reviewModel?.append($0) }
-                } while self.reviewModel == nil
-                semaphore.signal()
                 if let signal = self.signal {
                 signal()
                 }

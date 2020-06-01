@@ -16,7 +16,9 @@ struct Results: Codable {
     var summaryShort: String?
     var dateUpdated: String?
     var multimedia: Multimedia?
+    var byLine: String?
     enum CodingKeys: String, CodingKey {
+        case byLine = "byline"
         case displayTitle = "display_title"
         case summaryShort = "summary_short"
         case dateUpdated = "date_updated"
