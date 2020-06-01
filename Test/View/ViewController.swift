@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var generalView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)

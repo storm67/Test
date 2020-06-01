@@ -16,6 +16,7 @@ class ReviewCell: UITableViewCell {
             isImage.layer.masksToBounds = true
         }
     }
+    @IBOutlet weak var twoDate: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var unknown: UILabel!
@@ -23,9 +24,12 @@ class ReviewCell: UITableViewCell {
     var viewModel: DependencyReview? {
         didSet {
             guard let viewModel = viewModel else { return }
+            let textArray = viewModel.date.components(separatedBy: " ")
             isImage.setCustomImage(viewModel.image)
             name.text = viewModel.name
-            date.text = viewModel.date.replacingOccurrences(of: "-", with: "/").replacingOccurrences(of: " ", with: "     ") //суперкостыль
+            unknown.text = viewModel.byLine
+            date.text = textArray[0]
+            twoDate.text = textArray[1]
             textView.text = viewModel.description
         }
     }

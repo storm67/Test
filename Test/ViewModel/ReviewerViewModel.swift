@@ -10,6 +10,7 @@ import Foundation
 
 class ReviewerViewModel: NSObject {
     private(set) var reviewModel: [DependencyCritic]? = [DependencyCritic]()
+    var signal: (() -> ())?
     
     func getItems() {
         NetworkingSerivce.request(router: Router.getReviewer) { (result: Result<CriticModel, Error>) in
@@ -17,10 +18,17 @@ class ReviewerViewModel: NSObject {
                 let model = try result.get()
                 let items = model.results.map { DependencyCritic(model: $0) }
                 self.reviewModel = items
+                if let signal = self.signal {
+                signal()
+                }
             } catch {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func signal(semaphore: @escaping () -> ()) {
+        signal = semaphore
     }
     
      func refresh() {
