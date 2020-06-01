@@ -20,7 +20,6 @@
 		3123B81B24806CD5003CBAF4 /* ReviewerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123B81A24806CD5003CBAF4 /* ReviewerInfoViewModel.swift */; };
 		3123B81F248071FA003CBAF4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123B81E248071FA003CBAF4 /* ThirdViewController.swift */; };
 		3125B115248559F000768D9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3125B114248559F000768D9F /* ViewController.swift */; };
-		312F0EDF247FF1C6009D9E31 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312F0EDE247FF1C6009D9E31 /* DataModel.swift */; };
 		31E262AD247D1F2D001076B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E262AC247D1F2D001076B4 /* AppDelegate.swift */; };
 		31E262AF247D1F2D001076B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E262AE247D1F2D001076B4 /* SceneDelegate.swift */; };
 		31E262B7247D1F2D001076B4 /* Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31E262B5247D1F2D001076B4 /* Test.xcdatamodeld */; };
@@ -49,7 +48,6 @@
 		3123B81A24806CD5003CBAF4 /* ReviewerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerInfoViewModel.swift; sourceTree = "<group>"; };
 		3123B81E248071FA003CBAF4 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		3125B114248559F000768D9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		312F0EDE247FF1C6009D9E31 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		31E262A9247D1F2D001076B4 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E262AC247D1F2D001076B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		31E262AE247D1F2D001076B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = ../SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 				31186FB5247D3CAD005735FF /* ReviewModel.swift */,
 				31186FB9247D4175005735FF /* DependencyReview.swift */,
 				31186FBD247D47FC005735FF /* DependencyCritic.swift */,
-				312F0EDE247FF1C6009D9E31 /* DataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -280,7 +277,6 @@
 				31E262DC247D3859001076B4 /* ReviewerViewModel.swift in Sources */,
 				3123B81B24806CD5003CBAF4 /* ReviewerInfoViewModel.swift in Sources */,
 				31E262AF247D1F2D001076B4 /* SceneDelegate.swift in Sources */,
-				312F0EDF247FF1C6009D9E31 /* DataModel.swift in Sources */,
 				31186FC2247DBEEF005735FF /* ReviewerCell.swift in Sources */,
 				3125B115248559F000768D9F /* ViewController.swift in Sources */,
 				3123B81924806BB8003CBAF4 /* ReviewerInfo.swift in Sources */,
