@@ -19,10 +19,10 @@
 		3123B81924806BB8003CBAF4 /* ReviewerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123B81724806BB7003CBAF4 /* ReviewerInfo.swift */; };
 		3123B81B24806CD5003CBAF4 /* ReviewerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123B81A24806CD5003CBAF4 /* ReviewerInfoViewModel.swift */; };
 		3123B81F248071FA003CBAF4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123B81E248071FA003CBAF4 /* ThirdViewController.swift */; };
+		3125B1132485589000768D9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3125B1122485589000768D9F /* ViewController.swift */; };
 		312F0EDF247FF1C6009D9E31 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312F0EDE247FF1C6009D9E31 /* DataModel.swift */; };
 		31E262AD247D1F2D001076B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E262AC247D1F2D001076B4 /* AppDelegate.swift */; };
 		31E262AF247D1F2D001076B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E262AE247D1F2D001076B4 /* SceneDelegate.swift */; };
-		31E262B1247D1F2D001076B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E262B0247D1F2D001076B4 /* ViewController.swift */; };
 		31E262B7247D1F2D001076B4 /* Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31E262B5247D1F2D001076B4 /* Test.xcdatamodeld */; };
 		31E262B9247D1F32001076B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E262B8247D1F32001076B4 /* Assets.xcassets */; };
 		31E262CE247D2991001076B4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31E262CD247D2991001076B4 /* ReviewCell.xib */; };
@@ -48,11 +48,11 @@
 		3123B81724806BB7003CBAF4 /* ReviewerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerInfo.swift; sourceTree = "<group>"; };
 		3123B81A24806CD5003CBAF4 /* ReviewerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerInfoViewModel.swift; sourceTree = "<group>"; };
 		3123B81E248071FA003CBAF4 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		3125B1122485589000768D9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		312F0EDE247FF1C6009D9E31 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		31E262A9247D1F2D001076B4 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E262AC247D1F2D001076B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		31E262AE247D1F2D001076B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = ../SceneDelegate.swift; sourceTree = "<group>"; };
-		31E262B0247D1F2D001076B4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Test/ViewModel/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		31E262B6247D1F2D001076B4 /* Test.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Test.xcdatamodel; sourceTree = "<group>"; };
 		31E262B8247D1F32001076B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31E262BD247D1F32001076B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,6 +80,7 @@
 		31E262A0247D1F2D001076B4 = {
 			isa = PBXGroup;
 			children = (
+				3125B1122485589000768D9F /* ViewController.swift */,
 				31E262AB247D1F2D001076B4 /* Test */,
 				31E262AA247D1F2D001076B4 /* Products */,
 			);
@@ -112,7 +113,6 @@
 				31E262CC247D2603001076B4 /* ReviewerInfo */,
 				31E262CB247D25FB001076B4 /* Reviewer */,
 				31E262CA247D25F4001076B4 /* Review */,
-				31E262B0247D1F2D001076B4 /* ViewController.swift */,
 				31186FB7247D3D95005735FF /* FirstViewController.swift */,
 				31186FC3247DCD38005735FF /* SecondViewController.swift */,
 				3123B81E248071FA003CBAF4 /* ThirdViewController.swift */,
@@ -268,7 +268,6 @@
 				31186FC4247DCD38005735FF /* SecondViewController.swift in Sources */,
 				31186FBE247D47FC005735FF /* DependencyCritic.swift in Sources */,
 				3123B81F248071FA003CBAF4 /* ThirdViewController.swift in Sources */,
-				31E262B1247D1F2D001076B4 /* ViewController.swift in Sources */,
 				31E262D0247D2DB2001076B4 /* ReviewCell.swift in Sources */,
 				31186FBA247D4175005735FF /* DependencyReview.swift in Sources */,
 				31E262B7247D1F2D001076B4 /* Test.xcdatamodeld in Sources */,
@@ -276,6 +275,7 @@
 				31E262D6247D3502001076B4 /* NetworkingService.swift in Sources */,
 				31186FB6247D3CAD005735FF /* ReviewModel.swift in Sources */,
 				31E262AD247D1F2D001076B4 /* AppDelegate.swift in Sources */,
+				3125B1132485589000768D9F /* ViewController.swift in Sources */,
 				31E262DA247D384F001076B4 /* ReviewViewModel.swift in Sources */,
 				31186FBC247D46FF005735FF /* Extension.swift in Sources */,
 				31E262DC247D3859001076B4 /* ReviewerViewModel.swift in Sources */,
