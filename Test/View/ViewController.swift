@@ -5,7 +5,6 @@
 //  Created by gdml on 26/05/2020.
 //  Copyright © 2020 gdml. All rights reserved.
 //
-
 import UIKit
 
 class ViewController: UIViewController {
@@ -42,4 +41,3 @@ class ViewController: UIViewController {
     
 
 }
-
